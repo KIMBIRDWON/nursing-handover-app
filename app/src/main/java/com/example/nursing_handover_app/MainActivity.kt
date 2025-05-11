@@ -33,14 +33,24 @@ class MainActivity : AppCompatActivity() {
 
         binding.viewpager.adapter = MyPagerAdapter(this)
 
+        val tabIcons = arrayOf( //Tab 아이콘
+            R.drawable.home,
+            R.drawable.people,
+            R.drawable.note,
+            R.drawable.list
+        )
+
         //Tab과 ViewPager2 연결
         TabLayoutMediator(binding.tab, binding.viewpager) { tab, position ->
+            tab.setIcon(tabIcons[position])
+            /*
             tab.text = when (position) {
                 0 -> "홈"
-                1 -> "작성"
-                2 -> "조회"
+                1 -> "근무자"
+                2 -> "작성"
+                3 -> "조회"
                 else -> ""
-            }
+            }*/
         }.attach()
     }
 

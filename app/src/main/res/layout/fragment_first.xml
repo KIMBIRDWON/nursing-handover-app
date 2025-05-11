@@ -1,14 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--추후 ConstraintLayout으로 바꿀 수도 있음-->
+<!--추후 플로팅 액션 버튼(인계하기) 추가(393p)-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/nurse"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginLeft="35dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="간편하게 인수인계하기"
+                        android:textStyle="bold"
+                        android:layout_marginTop="85dp"
+                        android:layout_marginLeft="30dp"/>
+
+                    <!--ForthFragment로 이동-->
+                    <!--인수하기(인계받기)-->
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="30dp"
+                        android:text="인수하기"
+                        android:backgroundTint="#302945"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <!--MaterialCalendarView 이용하여 Decorator 기능 사용(오류로 인해 잠시 사용 중단)-->
+                <CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="한 눈에 보는 나의 스케줄"
+                        android:textStyle="bold"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="45dp"/>
+
+                    <!--SecondFragment의 자식 액티비티(사용자 스케줄)로 이동-->
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="45dp"
+                        android:text="조회하기"
+                        android:backgroundTint="#302945"/>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="142dp"
+                    android:layout_height="142dp"
+                    android:src="@drawable/nurse2"
+                    android:layout_marginLeft="25dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

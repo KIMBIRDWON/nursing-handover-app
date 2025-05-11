@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //maven { url = uri("https://jitpack.io") } //JitPack(MaterialCalendarView) 저장소 추가
     }
 }
 
