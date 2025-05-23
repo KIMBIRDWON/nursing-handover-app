@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+//DB 생성용 클래스입니다.
 class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
     DATABASE_NAME, null, DATABASE_VERSION){
     companion object {
@@ -85,11 +86,11 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
         }
 
         //이용자 값
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, position, dept, user_id, password) VALUES ('홍길동', '서울아산병원', '내과', '수간호사', 'hgd', 'gd123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, position, dept, user_id, password) VALUES ('임꺽정', '서울아산병원', '내과', '책임간호사', 'igj', 'gj123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, position, dept, user_id, password) VALUES ('장길산', '서울아산병원', '내과', '주임간호사', 'jks', 'ks123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, position, dept, user_id, password) VALUES ('김홍도', '서울아산병원', '내과', '간호사', 'khd', 'hd123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, position, dept, user_id, password) VALUES ('정약용', '서울아산병원', '내과', '간호사', 'jyy', 'yy123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('홍길동', '서울아산병원', '내과', '수간호사', 'hgd', 'gd123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('임꺽정', '서울아산병원', '내과', '책임간호사', 'igj', 'gj123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('장길산', '서울아산병원', '내과', '주임간호사', 'jks', 'ks123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('김홍도', '서울아산병원', '내과', '간호사', 'khd', 'hd123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('정약용', '서울아산병원', '내과', '간호사', 'jyy', 'yy123')")
 
         //스케줄 값 -> 홍길동과 임꺽정이 무조건 교대가 되도록 생성
         //홍길동(worker_id=1)
@@ -166,5 +167,20 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
         db.execSQL("DROP TABLE IF EXISTS $TABLE_DEPT")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_SCHEDULE")
         onCreate(db)
+    }
+    fun getScheduleByUserId(userId: Int): String {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT work_date, shift_type FROM schedule WHERE worker_id = ? ORDER BY work_date",
+            arrayOf(userId.toString())
+        )
+        val sb = StringBuilder()
+        while (cursor.moveToNext()) {
+            val date = cursor.getString(0)
+            val shift = cursor.getString(1)
+            sb.append("$date : $shift\n")
+        }
+        cursor.close()
+        return if (sb.isNotEmpty()) sb.toString() else "스케줄이 없습니다."
     }
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--추후 ConstraintLayout으로 바꿀 수도 있음-->
-<!--추후 플로팅 액션 버튼(인계하기) 추가(393p)-->
+<!--추후 플로팅 액션 버튼(인계하기(handover) 추가(393p)-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -42,8 +43,9 @@
                         android:layout_marginLeft="30dp"/>
 
                     <!--ForthFragment로 이동-->
-                    <!--인수하기(인계받기)-->
+                    <!--인수하기-->
                     <Button
+                        android:id="@+id/takeover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
