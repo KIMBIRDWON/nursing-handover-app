@@ -53,8 +53,7 @@ class HandOver : AppCompatActivity() {
             }
         }
 
-        val historyYes: RadioButton = findViewById(R.id.historyYes)
-        val historyNo: RadioButton = findViewById(R.id.historyNo)
+
         val historyInput: EditText = findViewById(R.id.historyInput)
         val historyGroup: RadioGroup = findViewById(R.id.historyGroup)
 
@@ -67,6 +66,55 @@ class HandOver : AppCompatActivity() {
                 R.id.historyNo -> {
                     historyInput.setText("")
                     historyInput.isEnabled = false
+                }
+            }
+        }
+        val allergyYes: RadioButton = findViewById(R.id.allergyYes)
+        val allergyNo: RadioButton = findViewById(R.id.allergyNo)
+        val allergyInput: EditText = findViewById(R.id.allergyInput)
+        val allergyGroup: RadioGroup = findViewById(R.id.allergyGroup)
+
+        allergyGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.allergyYes -> {
+                    allergyInput.isEnabled = true
+                    allergyInput.requestFocus()
+                }
+                R.id.allergyNo -> {
+                    allergyInput.setText("")
+                    allergyInput.isEnabled = false
+                }
+            }
+        }
+
+        val surgeryInput: EditText = findViewById(R.id.surgeryInput)
+        val surgeryGroup: RadioGroup = findViewById(R.id.surgeryGroup)
+
+        surgeryGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.surgeryYes -> {
+                    surgeryInput.isEnabled = true
+                    surgeryInput.requestFocus()
+                }
+                R.id.surgeryNo -> {
+                    surgeryInput.setText("")
+                    surgeryInput.isEnabled = false
+                }
+            }
+        }
+
+        val defacateInput: EditText = findViewById(R.id.defacateInput)
+        val defacateGroup: RadioGroup = findViewById(R.id.defacateGroup)
+
+        defacateGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.defacateYes -> {
+                    defacateInput.isEnabled = true
+                    defacateInput.requestFocus()
+                }
+                R.id.defacateNo -> {
+                    defacateInput.setText("")
+                    defacateInput.isEnabled = false
                 }
             }
         }
