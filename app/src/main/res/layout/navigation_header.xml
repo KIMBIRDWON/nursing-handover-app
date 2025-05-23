@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--모든 View에 DB 연동 예정-->
+<!--메뉴입니다.-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,9 +15,10 @@
         android:layout_marginLeft="20dp"/>
     
     <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="홍길동"
+        android:text="이름"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -25,9 +26,10 @@
         android:layout_marginLeft="20dp"/>
 
     <TextView
+        android:id="@+id/dept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="외상외과"
+        android:text="전공"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:layout_marginTop="5dp"

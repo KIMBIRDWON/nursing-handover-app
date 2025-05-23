@@ -4,12 +4,12 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-//DB 생성용 클래스입니다.
+//DB 관리 클래스입니다.
 class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
     DATABASE_NAME, null, DATABASE_VERSION){
     companion object {
         private const val DATABASE_NAME = "nursing_handover.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2 //1 -> 2
         private const val TABLE_WORKPLACE = "workplace"
         private const val TABLE_USERS = "users"
         private const val TABLE_DEPT = "dept"
@@ -45,7 +45,9 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
                 dept TEXT NOT NULL,
                 position TEXT NOT NULL,
                 user_id TEXT NOT NULL,
-                password TEXT NOT NULL
+                password TEXT NOT NULL,
+                image TEXT,
+                phone TEXT
             );
         """.trimIndent()
         db.execSQL(createUsersTable)
@@ -86,11 +88,11 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
         }
 
         //이용자 값
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('홍길동', '서울아산병원', '내과', '수간호사', 'hgd', 'gd123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('임꺽정', '서울아산병원', '내과', '책임간호사', 'igj', 'gj123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('장길산', '서울아산병원', '내과', '주임간호사', 'jks', 'ks123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('김홍도', '서울아산병원', '내과', '간호사', 'khd', 'hd123')")
-        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password) VALUES ('정약용', '서울아산병원', '내과', '간호사', 'jyy', 'yy123')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password, image, phone) VALUES ('홍길동', '서울아산병원', '내과', '수간호사', 'hgd', 'gd123', 'hong', '010-3453-4786')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password, image, phone) VALUES ('임꺽정', '서울아산병원', '내과', '책임간호사', 'igj', 'gj123', 'im', '010-1932-3461')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password, image, phone) VALUES ('장길산', '서울아산병원', '내과', '주임간호사', 'jks', 'ks123', 'jang', '010-2435-5593')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password, image, phone) VALUES ('김홍도', '서울아산병원', '내과', '간호사', 'khd', 'hd123', 'kim', '010-9453-9834')")
+        db.execSQL("INSERT INTO $TABLE_USERS (name, workplace, dept, position, user_id, password, image, phone) VALUES ('정약용', '서울아산병원', '내과', '간호사', 'jyy', 'yy123', 'jeong', '010-8932-4582')")
 
         //스케줄 값 -> 홍길동과 임꺽정이 무조건 교대가 되도록 생성
         //홍길동(worker_id=1)
@@ -162,11 +164,15 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_WORKPLACE")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_DEPT")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_SCHEDULE")
-        onCreate(db)
+//        db.execSQL("DROP TABLE IF EXISTS $TABLE_WORKPLACE")
+//        db.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
+//        db.execSQL("DROP TABLE IF EXISTS $TABLE_DEPT")
+//        db.execSQL("DROP TABLE IF EXISTS $TABLE_SCHEDULE")
+//        onCreate(db)
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE users ADD COLUMN phone TEXT")
+            db.execSQL("ALTER TABLE users ADD COLUMN image TEXT")
+        }
     }
     fun getScheduleByUserId(userId: Int): String {
         val db = this.readableDatabase
