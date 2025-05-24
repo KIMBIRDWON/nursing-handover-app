@@ -1,8 +1,10 @@
 package com.example.nursing_handover_app
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.nursing_handover_app.databinding.ActivityHandOverBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class HandOver : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +37,7 @@ class HandOver : AppCompatActivity() {
             val formatted = "${year}년 ${month + 1}월 ${dayOfMonth}일"
             textViewDate.text = formatted
         }
+
         val radioButtons = listOf(
             findViewById<RadioButton>(R.id.er),
             findViewById<RadioButton>(R.id.outpatient),
@@ -124,6 +130,44 @@ class HandOver : AppCompatActivity() {
         addTestButton.setOnClickListener {
             val testItem = layoutInflater.inflate(R.layout.test_result_input, null)
             testContainer.addView(testItem)
+        }
+
+        val scheduledTestsContainer = findViewById<LinearLayout>(R.id.scheduledTestsContainer)
+        val addScheduledTestButton = findViewById<Button>(R.id.addScheduledTestButton)
+
+        addScheduledTestButton.setOnClickListener {
+            val testView = layoutInflater.inflate(R.layout.scheduled_test_item, null)
+
+            val dateInput = testView.findViewById<EditText>(R.id.testDateInput)
+            val fastingCheck = testView.findViewById<CheckBox>(R.id.fastingCheck)
+            val fastingTimeInput = testView.findViewById<EditText>(R.id.fastingTimeInput)
+
+            val today = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+            dateInput.setText(dateFormat.format(today.time))
+
+            dateInput.setOnClickListener {
+                val cal = Calendar.getInstance()
+                val dpd = DatePickerDialog(
+                    this,
+                    { _, year, month, dayOfMonth ->
+                        val selectedDate = Calendar.getInstance()
+                        selectedDate.set(year, month, dayOfMonth)
+                        dateInput.setText(dateFormat.format(selectedDate.time))
+                    },
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+                )
+                dpd.show()
+            }
+
+            fastingCheck.setOnCheckedChangeListener { _, isChecked ->
+                fastingTimeInput.isEnabled = isChecked
+                if (!isChecked) fastingTimeInput.setText("")
+            }
+
+            scheduledTestsContainer.addView(testView)
         }
 
     }
