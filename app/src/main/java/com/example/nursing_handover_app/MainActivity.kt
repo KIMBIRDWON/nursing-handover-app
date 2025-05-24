@@ -1,7 +1,10 @@
 package com.example.nursing_handover_app
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -87,10 +90,37 @@ class MainActivity : AppCompatActivity() {
         binding.tab.getTabAt(position)?.select()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            return true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { //툴바 로그아웃
+        return when (item.itemId) {
+            R.id.logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean { //사이드 메뉴 로그아웃
+        menuInflater.inflate(R.menu.menu_navigation, menu)
+        binding.mainDrawer.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
+        return true
+    }
+
+    private fun logout() { //로그아웃
+        val prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+        prefs.edit().clear().apply()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
