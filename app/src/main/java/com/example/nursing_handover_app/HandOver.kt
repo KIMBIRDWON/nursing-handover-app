@@ -1,8 +1,10 @@
 package com.example.nursing_handover_app
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.CalendarView
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -23,7 +25,6 @@ class HandOver : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        // MainActivity.kt
         val calendarView = findViewById<CalendarView>(R.id.visitPicker)
         val textViewDate = findViewById<TextView>(R.id.visitDate)
 
@@ -52,7 +53,6 @@ class HandOver : AppCompatActivity() {
                 }
             }
         }
-
 
         val historyInput: EditText = findViewById(R.id.historyInput)
         val historyGroup: RadioGroup = findViewById(R.id.historyGroup)
@@ -118,5 +118,13 @@ class HandOver : AppCompatActivity() {
                 }
             }
         }
+        val testContainer = findViewById<LinearLayout>(R.id.testContainer)
+        val addTestButton = findViewById<Button>(R.id.addTestButton)
+
+        addTestButton.setOnClickListener {
+            val testItem = layoutInflater.inflate(R.layout.test_result_input, null)
+            testContainer.addView(testItem)
+        }
+
     }
 }
