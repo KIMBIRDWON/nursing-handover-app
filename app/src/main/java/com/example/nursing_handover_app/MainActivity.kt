@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -35,7 +37,26 @@ class MainActivity : AppCompatActivity() {
             syncState()
         }
 
-        //binding.viewpager.adapter = MyPagerAdapter(this)
+        //로그인 정보 연동
+        val headerView = binding.mainDrawer.getHeaderView(0)
+        val userName = intent.getStringExtra("USER_NAME") ?: "이름"
+        val userDept = intent.getStringExtra("USER_DEPT") ?: "전공"
+        val userImage = intent.getIntExtra("USER_IMAGE", R.drawable.profile)
+
+        headerView.findViewById<TextView>(R.id.name).text = userName
+        headerView.findViewById<TextView>(R.id.dept).text = userDept
+        headerView.findViewById<ImageView>(R.id.image).setImageResource(userImage)
+
+        //로그아웃
+        binding.mainDrawer.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
 
         val tabIcons = arrayOf( //Tab 아이콘
             R.drawable.home,
@@ -78,29 +99,29 @@ class MainActivity : AppCompatActivity() {
         binding.tab.getTabAt(position)?.select()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { //툴바 로그아웃
-        return when (item.itemId) {
-            R.id.logout -> {
-                logout()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean { //툴바 로그아웃
+//        return when (item.itemId) {
+//            R.id.logout -> {
+//                logout()
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean { //사이드 메뉴 로그아웃
-        menuInflater.inflate(R.menu.menu_navigation, menu)
-        binding.mainDrawer.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.logout -> {
-                    logout()
-                    true
-                }
-                else -> false
-            }
-        }
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean { //사이드 메뉴 로그아웃
+//        menuInflater.inflate(R.menu.menu_navigation, menu)
+//        binding.mainDrawer.setNavigationItemSelectedListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.logout -> {
+//                    logout()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//        return true
+//    }
 
     private fun logout() { //로그아웃
         val prefs = getSharedPreferences("loginPrefs", MODE_PRIVATE)
