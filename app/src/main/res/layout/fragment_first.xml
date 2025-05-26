@@ -83,8 +83,9 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginLeft="45dp"/>
 
-                    <!--SecondFragment의 자식 액티비티(사용자 스케줄)로 이동-->
+                    <!--SecondFragment로 이동-->
                     <Button
+                        android:id="@+id/check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"

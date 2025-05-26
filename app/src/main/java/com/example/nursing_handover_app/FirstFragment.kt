@@ -20,8 +20,15 @@ class FirstFragment : Fragment() {
         //인수하기(takeover) 버튼 클릭 시
         val btnTakeover = view.findViewById<Button>(R.id.takeover)
         btnTakeover.setOnClickListener {
-            //ForthFragment로 이동
+            //ThirdFragment로 이동
             (activity as? MainActivity)?.selectTab(3)
+        }
+
+        //조회하기(check) 버튼 클릭 시
+        val btnCheck = view.findViewById<Button>(R.id.check)
+        btnCheck.setOnClickListener {
+            //SecondFragment로 이동
+            (activity as? MainActivity)?.selectTab(1)
         }
     }
 }

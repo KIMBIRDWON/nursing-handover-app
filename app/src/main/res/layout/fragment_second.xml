@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:text="근무자 조회하기"
         android:textStyle="bold"
-        android:textSize="16dp"
+        android:textSize="17dp"
         android:gravity="center"/>
     <View
         android:layout_width="match_parent"

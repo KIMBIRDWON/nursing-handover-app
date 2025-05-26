@@ -1,5 +1,6 @@
 package com.example.nursing_handover_app
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -161,6 +162,43 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
         db.execSQL("INSERT INTO $TABLE_SCHEDULE (worker_id, work_date, shift_type) VALUES (2, '2025-05-30', 'Eve')")
         db.execSQL("INSERT INTO $TABLE_SCHEDULE (worker_id, work_date, shift_type) VALUES (2, '2025-05-31', 'Nig')")
 
+        // 인계기록 테이블 생성
+        val createHandoverTable = """
+            CREATE TABLE handover (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                hand_nurse TEXT,
+                take_nurse TEXT,
+                write_date TEXT,
+                room_num INTEGER,
+                bed_num TEXT,
+                name TEXT,
+                sex TEXT,
+                age INTEGER,
+                visitDate TEXT,
+                hospitalRouteGroup TEXT,
+                historyGroup TEXT,
+                historyInput TEXT,
+                allergyGroup TEXT,
+                allergyInput TEXT,
+                surgeryGroup TEXT,
+                surgeryInput TEXT,
+                cause TEXT,
+                blood1 INTEGER,
+                blood2 INTEGER,
+                pulse INTEGER,
+                breath INTEGER,
+                temperature INTEGER,
+                oxy INTEGER,
+                SpO2 INTEGER,
+                pee INTEGER,
+                defacateGroup TEXT,
+                defacateInput TEXT,
+                pipe INTEGER,
+                pipe_amount INTEGER,
+                color TEXT
+            );
+        """.trimIndent()
+        db.execSQL(createHandoverTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -173,6 +211,75 @@ class AppDatabaseHelper (context: Context) : SQLiteOpenHelper(context,
             db.execSQL("ALTER TABLE users ADD COLUMN phone TEXT")
             db.execSQL("ALTER TABLE users ADD COLUMN image TEXT")
         }
+    }
+    //인수인계 연동
+    fun insertHandover(
+        hand_nurse: String,
+        take_nurse: String,
+        write_date: String,
+        room_num: Int,
+        bed_num: String,
+        name: String,
+        sex: String,
+        age: Int,
+        visitDate: String,
+        hospitalRouteGroup: String,
+        historyGroup: String,
+        historyInput: String,
+        allergyGroup: String,
+        allergyInput: String,
+        surgeryGroup: String,
+        surgeryInput: String,
+        cause: String,
+        blood1: Int,
+        blood2: Int,
+        pulse: Int,
+        breath: Int,
+        temperature: Int,
+        oxy: Int,
+        SpO2: Int,
+        pee: Int,
+        defacateGroup: String,
+        defacateInput: String,
+        pipe: Int,
+        pipe_amount: Int,
+        color: String
+    ) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("hand_nurse", hand_nurse)
+            put("take_nurse", take_nurse)
+            put("write_date", write_date)
+            put("room_num", room_num)
+            put("bed_num", bed_num)
+            put("name", name)
+            put("sex", sex)
+            put("age", age)
+            put("visitDate", visitDate)
+            put("hospitalRouteGroup", hospitalRouteGroup)
+            put("historyGroup", historyGroup)
+            put("historyInput", historyInput)
+            put("allergyGroup", allergyGroup)
+            put("allergyInput", allergyInput)
+            put("surgeryGroup", surgeryGroup)
+            put("surgeryInput", surgeryInput)
+            put("cause", cause)
+            put("blood1", blood1)
+            put("blood2", blood2)
+            put("pulse", pulse)
+            put("breath", breath)
+            put("temperature", temperature)
+            put("oxy", oxy)
+            put("SpO2", SpO2)
+            put("pee", pee)
+            put("defacateGroup", defacateGroup)
+            put("defacateInput", defacateInput)
+            put("pipe", pipe)
+            put("pipe_amount", pipe_amount)
+            put("color", color)
+        }
+        db.insert("handover", null, values)
+        db.close()
     }
     fun getScheduleByUserId(userId: Int): String {
         val db = this.readableDatabase

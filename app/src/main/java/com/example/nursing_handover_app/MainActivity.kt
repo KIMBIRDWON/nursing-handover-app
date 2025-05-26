@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         //toolbar와 DrawerLayout 연동(햄버거 아이콘 설정)
         toggle = ActionBarDrawerToggle(this, binding.drawer, binding.toolbar, R.string.drawer_open, R.string.drawer_close
@@ -64,19 +65,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab) {}
             override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab) {}
         })
-
-        //Tab과 ViewPager2 연결
-//        TabLayoutMediator(binding.tab, binding.viewpager) { tab, position ->
-//            tab.setIcon(tabIcons[position])
-//            /*
-//            tab.text = when (position) {
-//                0 -> "홈"
-//                1 -> "근무자"
-//                2 -> "작성"
-//                3 -> "조회"
-//                else -> ""
-//            }*/
-//        }.attach()
 
         //프래그먼트 트랜잭션
         if (savedInstanceState == null) {
