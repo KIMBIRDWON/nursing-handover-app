@@ -261,13 +261,6 @@ class ForthFragment : Fragment() {
             "유" -> defecateGroup.check(R.id.defacateYes)
             "무" -> defecateGroup.check(R.id.defacateNo)
         }
-
-//        //3. 다이얼로그 표시
-//        android.app.AlertDialog.Builder(requireContext())
-//            .setView(dialogView)
-//            .setPositiveButton("닫기") { dialog, _ -> dialog.dismiss() }
-//            .show()
-
         //3. 다이얼로그 표시
         val dialog = android.app.AlertDialog.Builder(requireContext())
             .setView(dialogView)
@@ -278,27 +271,5 @@ class ForthFragment : Fragment() {
         }
 
         dialog.show()
-
-        //읽기 전용으로 전환(더 추가해야 함)
-//        val editIds = listOf(
-//            R.id.historyInput, R.id.allergyInput, R.id.surgeryInput, R.id.defacateInput,
-//        )
-//        editIds.forEach { id ->
-//            dialogView.findViewById<EditText>(id)?.apply {
-//                isEnabled = false
-//                isFocusable = false
-//                isClickable = false
-//            }
-//        }
-        val radioIds = listOf(
-            R.id.historyYes, R.id.historyNo,
-            R.id.allergyYes, R.id.allergyNo,
-            R.id.surgeryYes, R.id.surgeryNo,
-            R.id.defacateYes, R.id.defacateNo,
-            R.id.er, R.id.outpatient, R.id.transfer
-        )
-        radioIds.forEach { id ->
-            dialogView.findViewById<RadioButton>(id)?.isEnabled = false
-        }
     }
 }

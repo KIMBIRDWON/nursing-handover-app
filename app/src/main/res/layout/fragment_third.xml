@@ -884,6 +884,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#302945"
                 android:text="저장하기"
+                android:textSize="16dp"
                 android:layout_margin="15dp"/>
         </LinearLayout>
     </ScrollView>
